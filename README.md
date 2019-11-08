@@ -25,6 +25,8 @@ In this activity, you'll be creating an Amazon-like storefront with the MySQL sk
 
 5. Then create a Node application called `bamazonCustomer.js`. Running this application will first display all of the items available for sale. Include the ids, names, and prices of products for sale.
 
+![](https://github.com/maria341/Bamazon/blob/master/images/customer.png)
+
 ## Challenge #2: Manager View (Next Level)
 
 * Create a new Node application called `bamazonManager.js`. Running this application will:
