@@ -1,7 +1,6 @@
 let mysql = require("mysql");
 let inquirer = require("inquirer");
 let Table = require("cli-table");
-
 let connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -68,24 +67,25 @@ let start = function() {
             var itemId = answer.item_id;
             connection.query('SELECT * FROM items WHERE ?', [{
                 item_id: itemId
-            }], function(err, selectedItem) {
+            }], function(error, selectedItem) {
 
-                if (err) throw err;
+                if (error) throw error;
                 if (selectedItem[0].stockQuantity - quantity >= 0) {
 
-                    var orderTotal = quantity * selectedItem[0].price;
+                    var orderTotal = stockQuantity * selectedItem[0].price;
                     
                     console.log('We have enough (' + selectedItem[0].productName + ')!');
                     console.log('Quantity in stock: ' + selectedItem[0].stockQuantity + ' Order quantity: ' + quantity);
                     console.log('You will be charged $' + orderTotal + '. Thank you!');
 
+
                     connection.query('UPDATE items SET stockQuantity=? WHERE id=?', [selectedItem[0].stockQuantity - quantity, itemId],
-                        function(err, inventory) {
-                            if (err) throw err;
+                        function(error) {
+                            if (error) throw error;
                            // orderAgain();
                         })
                 } else {
-                    console.log('Insufficient quantity.  Please adjust your order, we only have ' + selectedItem[0].stockQuantity + ' ' + selectedItem[0].productName + 'in stock.');
+                    console.log('Insufficient stock' + selectedItem[0].stockQuantity + ' ' + selectedItem[0].productName + 'in stock.');
                    // orderAgain();
                 }
             });
